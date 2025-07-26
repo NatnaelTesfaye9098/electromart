@@ -5,17 +5,25 @@ import Link from 'next/link';
 
 export default function CartPage() {
 
-    const {cart} = useCart();
-    const totalPrice = cart.reduce((sum, item)=> sum+(Number(item.price)*Number(item.quantity)), 0);
+    const {cart, updateItemQuantity, removeFromCart} = useCart();
+    const totalPrice = cart.reduce((sum, item)=> sum+(item.price*item.quantity), 0);
+
+    const handleUpdateQuantity = (id:string, newQuantity:number) => {
+        updateItemQuantity(id, newQuantity);
+    };
+
+    const handleRemoveItem = (id: string) => {
+        removeFromCart(id);
+    }
 
     return(
         <div className="min-h-screen bg-gray-900 text-white p-6">
             <div className="container mx-auto py-8">
                 <h1 className="text-4xl font-bold text-center mb-8">Your Shopping Cart</h1>
                 {cart.length === 0 ? (
-                    <div className="text-center text-gray-900 text-xl">
-                        <p className="mb-4">Your cart is empty!</p>
-                        <Link href="/" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200">
+                    <div className="text-center text-gray-900 text-xl mt-20">
+                        <p className="mb-6 text-white">Your cart is empty!</p>
+                        <Link href="/" className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 cursor-pointer focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
                             Continue Shopping
                         </Link>
                     </div>
@@ -29,10 +37,21 @@ export default function CartPage() {
                                         <h2 className="text-xl font-semibold text-blue-300">{item.name}</h2>
                                         <p className="text-gray-400">Price: ETB{Number(item.price).toFixed(2)}</p>
                                         <p className="text-gray-300">Quantity: ETB{item.quantity}</p>
+
+                                        <div className="flex items-center justify-center md:justify-start mt-2 space-x-2">
+                                            <button onClick={()=> handleUpdateQuantity(item.id, item.quantity-1)} className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md transition-colors duration-200" disabled={item.quantity <= 1}>-</button>
+                                        </div>
+                                        <span className="text-lg font-semibold">{item.quantity}</span>
+                                        <button onClick={()=> handleUpdateQuantity(item.id, item.quantity+1)} className="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded-md transition-colors duration-200">+</button>
                                     </div>
-                                    <span className="text-2xl font-bold text-blue-400">
-                                        ETB {(Number(item.price) * Number(item.quantity)).toFixed(2)}
-                                    </span>
+                                    <div className="flex flex-col items-center md:items-end ml-auto mt-4 mg:mt-0">
+                                        <span className="text-2xl font-bold text-blue-400">
+                                            ETB {(item.price * item.quantity).toFixed(2)}
+                                        </span>
+                                        <button onClick={()=> handleRemoveItem(item.id)} className="bg-gray-600 hover:bg-gray-700 text-white text-sm py-1 px-3 rounded-md transition-colors duration-200">
+                                            Remove from Cart
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
