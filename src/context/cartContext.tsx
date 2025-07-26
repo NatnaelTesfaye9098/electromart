@@ -5,7 +5,7 @@ import {createContext, useContext, useState, ReactNode} from 'react';
 interface CartItem{
     id: string;
     name: string;
-    price: string;
+    price: number;
     imageUrl: string;
     quantity: number;
 }
@@ -30,10 +30,13 @@ export const CartProvider: React.FC<CartProviderProps> = ({children}) => {
 
             if(existingItemIndex>-1){
                 const updatedCart = [...prev];
-                updatedCart[existingItemIndex].quantity += (itemToAdd.quantity || 1);
+                updatedCart[existingItemIndex] = {
+                    ...updatedCart[existingItemIndex],
+                    quantity: updatedCart[existingItemIndex].quantity + itemToAdd.quantity,
+                }
                 return updatedCart;
             }else{
-                return [...prev, {...itemToAdd, quantity: itemToAdd.quantity || 1}]; 
+                return [...prev, {...itemToAdd}]; 
             }
         });
         console.log("Adding to Cart..");
