@@ -2,6 +2,7 @@
 
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/cartContext";
+import {motion} from "framer-motion";
 
 export default function Home() {
 
@@ -65,9 +66,11 @@ export default function Home() {
         Shop Now!
       </button>
       </section>
-      <section className="grid gri-cols-1 md:grid-cols-2 lg:grid-cols 3 gap-6 max-w-7xl w-full pb-10">
+
+      <motion.section initial="hidden" animate="visible" variants={{hidden:{opacity:0}, visible:{opacity:1, transition:{staggerChildren:0.05}}}} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full pb-10">
         {
           products.map((product)=> (
+            <motion.div key={product.id} variants={{hidden:{opacity:0, y:20}, visible:{opacity:1, y:0}}} transition={{duration:0.5, ease:"easeOut"}} className="flex justify-center">
             <ProductCard
               key={product.id}
               id={product.id}
@@ -76,8 +79,9 @@ export default function Home() {
               imageUrl={product.imageUrl}
               description={product.description}
           />
+            </motion.div>
         ))}
-      </section>
+      </motion.section>
     </main>
   )
 }
