@@ -58,9 +58,6 @@ export default function Home() {
         <h1 className="text-6xl md:text-7xl font-extrabold mb-4 text-center drop-shadow-lg animate-fade-in-down">
           Welcome to ElectroMart!
         </h1>
-        <div className="mt-4 text-center text-xl text-blue-300 font-semibold">
-          Items in Cart: <span className="text-blue-200">{cart.reduce((total, item) => total+item.quantity, 0)}</span>
-        </div>
       <p className="text-xl md:texl-2xl text-gray-300 animate-fade-in-up">
         Your Premium Destination for Cutting-Edge Electronics
       </p>
