@@ -7,6 +7,28 @@ import {motion} from "framer-motion";
 export default function Home() {
 
   const { cart } = useCart();
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition:{
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden :{opacity: 0, scale: 0.95, x:20},
+    visible: {
+      opacity: 1,
+      scale: 1,
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut",
+      },
+    }
+  };
   
   const products = [
   {
@@ -67,10 +89,10 @@ export default function Home() {
       </button>
       </section>
 
-      <motion.section initial="hidden" animate="visible" variants={{hidden:{opacity:0}, visible:{opacity:1, transition:{staggerChildren:0.05}}}} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full pb-10">
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full pb-10">
         {
           products.map((product)=> (
-            <motion.div key={product.id} variants={{hidden:{opacity:0, y:20}, visible:{opacity:1, y:0}}} transition={{duration:0.5, ease:"easeOut"}} className="flex justify-center">
+            <motion.div key={product.id} variants={cardVariants} className="flex justify-center">
             <ProductCard
               key={product.id}
               id={product.id}
@@ -81,7 +103,7 @@ export default function Home() {
           />
             </motion.div>
         ))}
-      </motion.section>
+      </motion.div>
     </main>
   )
 }

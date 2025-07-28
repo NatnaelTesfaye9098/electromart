@@ -1,12 +1,16 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {useCart} from "@/context/cartContext";
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
+import SkeletonCard from '@/components/SkeletonCard';
 import {motion, AnimatePresence} from "framer-motion";
+import {toast} from "sonner";
 
 export default function CartPage() {
 
+    const [isLoading, setIsLoading] = useState(true);
     const {cart, updateItemQuantity, removeFromCart} = useCart();
     const totalPrice = cart.reduce((sum, item)=> sum+(item.price*item.quantity), 0);
 
@@ -16,18 +20,41 @@ export default function CartPage() {
 
     const handleRemoveItem = (id: string) => {
         removeFromCart(id);
-    }
+    };
+
+    const showRemoveToast = (itemName: string) => {
+        toast.error(`You removed ${itemName} from cart`)
+    };
 
     const itemVariants = {
-        hidden: {opacity:0, y:200},
-        visible: {opacity:1, y:0, transition:{duration:0.3}},
-        exit: {opacity:0, y:-20, transition:{duration:0.2}}
+        hidden: { opacity: 0, scale: 0.95, y: -20 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            transition: {
+                duration: 0.7,
+                ease: ["easeOut"],
+            }
+        },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
     };
 
     const containerVariants = {
-        hidden: {opacity:0},
-        visible:{opacity:1, transition:{staggerChildren:1}}
+        hidden: {},
+        visible: {
+            transition: {
+            staggerChildren: 0.2,
+        },
+  },
     };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
 
     return(
         <div className="min-h-screen bg-gray-900 text-white p-6">
@@ -40,12 +67,18 @@ export default function CartPage() {
                             Continue Shopping
                         </Link>
                     </div>
-                ) : (
+                ) : (isLoading ? (
+                    <div className="flex flex-col space-y-4">
+                        {Array(4).fill(0).map((_, index) =>
+                            <SkeletonCard key={index} />
+                        )}
+                    </div>
+                ):(
                     <div>
                         <AnimatePresence>
-                            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+                            <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-4">
                                 {cart.map((item) => (
-                                    <motion.div key={item.id} variants={itemVariants} exit="exit" layout className="flex items-center bg-gray-800 p-4 rounded-lg shadow-md">
+                                    <motion.div key={item.id} variants={itemVariants} layout className="flex items-center bg-gray-800 p-4 rounded-lg shadow-md">
                                         <img src={item.imageUrl} alt={item.name} className="w-24 h-24 object-cover rounded-md mr-4" />
                                         <div className="flex-grow">
                                             <h2 className="text-xl font-semibold text-blue-300">{item.name}</h2>
@@ -59,11 +92,11 @@ export default function CartPage() {
                                                 <Button onClick={()=> handleUpdateQuantity(item.id, item.quantity+1)} className="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded-md transition-colors duration-200 cursor-pointer focus:ring-2 focus:ring-green-500 focus:ring-opacity-75">+</Button>
                                             </div>
                                         </div>
-                                        <div className="flex flex-col items-center md:items-end ml-auto mt-4 mg:mt-0">
+                                        <div className="flex flex-col items-center md:items-end ml-auto mt-4 md:mt-0">
                                             <span className="text-xl font-bold text-blue-400">
                                                 ETB {(item.price * item.quantity).toFixed(2)}
                                             </span>
-                                            <Button onClick={()=> handleRemoveItem(item.id)} className="mt-3 bg-blue-600 hover:bg-blue-700 font-semibold text-white text-sm py-2 px-3 rounded-md transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 cursor-pointer">
+                                            <Button onClick={()=> {showRemoveToast(item.name); handleRemoveItem(item.id)}} className="mt-3 bg-blue-600 hover:bg-blue-700 font-semibold text-white text-sm py-2 px-3 rounded-md transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 cursor-pointer">
                                                 Remove from Cart
                                             </Button>
                                         </div>
@@ -83,6 +116,7 @@ export default function CartPage() {
                             </Button>
                         </div>
                     </div>
+                    )
                 )}
             </div>
         </div>
