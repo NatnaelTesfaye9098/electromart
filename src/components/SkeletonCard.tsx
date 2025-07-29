@@ -5,7 +5,7 @@ export default function SkeletonCard (){
         <div className="flex items-center bg-gray-700 p-4 rounded-lg shadow-md">
             <Skeleton className="w-24 h-24 rounded-md mr-4 bg-gray-600"></Skeleton>
                 <div className="flex-grow space-y-2">
-                    <Skeleton className="w-33 h-3 rounded-full bg-gray-600"></Skeleton>
+                    <Skeleton className="w-33 h-4 rounded-full bg-gray-600"></Skeleton>
                     <Skeleton className="bg-gray-600 rounded-full w-26 h-3"></Skeleton>
                     <Skeleton className="bg-gray-600 rounded-full w-24 h-3"></Skeleton>
                     <Skeleton className="bg-gray-600 rounded-md w-24 h-7 mt-4"></Skeleton>
