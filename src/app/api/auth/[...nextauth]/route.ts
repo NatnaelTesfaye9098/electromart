@@ -4,10 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
-import { pages } from 'next/dist/build/templates/app-page';
-import { signIn } from 'next-auth/react';
 
-import { DefaultSession, DefaultUser } from "next-auth";
 
 declare module "next-auth" {
   interface Session {
@@ -18,7 +15,7 @@ declare module "next-auth" {
       image?: string | null;
     }
   }
-  interface User extends DefaultUser {
+  interface User {
     id: string;
   }
 }
@@ -36,8 +33,8 @@ const handler = NextAuth({
     CredentialsProvider({
         name: "Credentials",
         credentials: {
-            email: { label: "Email", type: "text", placeholder: "Enter your email" },
-            password: { label: "Password", type: "password", placeholder: "Enter your password" },
+            email: { label: "Email", type: "text"},
+            password: { label: "Password", type: "password"},
         },
 
         async authorize(credentials) {
