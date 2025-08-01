@@ -83,7 +83,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-700">
             <Card className="w-[380px]">
                 <CardHeader className="text-center">
                     <CardTitle className="text-2xl font-bold">Login to Electromart</CardTitle>

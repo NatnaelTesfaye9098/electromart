@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import SkeletonCard from '@/components/SkeletonCard';
 import {motion, AnimatePresence} from "framer-motion";
 import {toast} from "sonner";
+import {X} from "lucide-react"
 
 export default function CartPage() {
 
@@ -23,7 +24,19 @@ export default function CartPage() {
     };
 
     const showRemoveToast = (itemName: string) => {
-        toast.error(`You removed ${itemName} from cart`)
+        toast.custom((t) => (
+            <div className="relative w-full max-w-sm p-4 bg-white dark:bg-zinc-900 rounded-xl shadow-md overflow-hidden border border-red-400">
+                <motion.div initial={{scaleX:1}} animate={{scaleX:0}} transition={{duration:4, ease:"linear"}} className="absolute top-0 left-0 h-1 bg-red-500 w-full origin-left"/>
+                <div className="relative z-10 flex items-center gap-3">
+                    <div className="flex-1">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                            You removed <span className="font-semibold">{itemName}</span> from your cart.
+                        </p>
+                    </div>
+                    <X className="text-red-500 mt-1" size={20}/>
+                </div>
+            </div>
+        ), {duration: 4000});
     };
 
     const itemVariants = {

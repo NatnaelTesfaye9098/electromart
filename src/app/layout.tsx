@@ -33,7 +33,7 @@ export default function RootLayout({
         <CartProvider>
           <Navbar />
           {children}
-          <Toaster position="top-right" richColors closeButton />
+          <Toaster position="top-right" theme="system" richColors closeButton />
         </CartProvider>
       </body>
     </html>
