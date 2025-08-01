@@ -25,7 +25,7 @@ export default function CartPage() {
 
     const showRemoveToast = (itemName: string) => {
         toast.custom((t) => (
-            <div className="relative w-full max-w-sm p-4 bg-white dark:bg-zinc-900 rounded-xl shadow-md overflow-hidden border border-red-400">
+            <div className="relative w-full max-w-sm p-3.5 bg-white dark:bg-zinc-900 rounded-xl shadow-md overflow-hidden border border-red-400">
                 <motion.div initial={{scaleX:1}} animate={{scaleX:0}} transition={{duration:4, ease:"linear"}} className="absolute top-0 left-0 h-1 bg-red-500 w-full origin-left"/>
                 <div className="relative z-10 flex items-center gap-3">
                     <div className="flex-1">
@@ -33,7 +33,7 @@ export default function CartPage() {
                             You removed <span className="font-semibold">{itemName}</span> from your cart.
                         </p>
                     </div>
-                    <X className="text-red-500 mt-1" size={20}/>
+                    <X className="text-red-500 mt-1 cursor-pointer p-0.75 hover:bg-gray-300 hover:rounded-full" size={20} onClick={()=>{toast.dismiss(t.id)}}/>
                 </div>
             </div>
         ), {duration: 4000});
