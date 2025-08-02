@@ -22,16 +22,14 @@ declare module "next-auth" {
 
 const handler = NextAuth({
     adapter: PrismaAdapter(prisma),
-    session: {
-        strategy: 'jwt',
-    },
+    session: { strategy: 'jwt'},
     providers: [
     GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID as string,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     CredentialsProvider({
-        name: "Credentials",
+        name: "credentials",
         credentials: {
             email: { label: "Email", type: "text"},
             password: { label: "Password", type: "password"},
