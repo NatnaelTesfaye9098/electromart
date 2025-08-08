@@ -16,6 +16,6 @@ An e-commerce platform being built with Next.js, designed to provide a seamless 
 * **Backend:**
     * [NextAuth.js](https://next-auth.js.org/)
     * [Prisma](https://www.prisma.io/)
-    * [NeonDB](https://www.mongodb.com/)
+    * [NeonDB](https://www.neon.com/)
     * **[Zod](https://zod.dev/)** (for validation)
 
