@@ -1,37 +1,8 @@
-ElectroMart — modern e‑commerce built with Next.js App Router, Prisma, and Neon Postgres.
-
-## Tech stack
-
-- Next.js (App Router)
-- React 19
-- Tailwind CSS v4
-- Framer Motion
-- Prisma ORM
-- Neon (Postgres)
-- NextAuth (Google, Credentials)
-- Shadcn-style UI primitives
-- Sonner toasts
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-1) Configure environment variables in `.env`:
-
-```
-DATABASE_URL="postgresql://<user>:<password>@<neon-host>/<db>?sslmode=require"
-GOOGLE_CLIENT_ID="..."
-GOOGLE_CLIENT_SECRET="..."
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="change-me"
-```
-
-2) Migrate and seed the database:
-
-```
-npm run db:migrate
-npm run db:seed
-```
-
-3) Run the development server:
+First, run the development server:
 
 ```bash
 npm run dev
