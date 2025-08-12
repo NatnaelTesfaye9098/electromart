@@ -33,7 +33,7 @@ export default function CartPage() {
                             You removed <span className="font-semibold">{itemName}</span> from your cart.
                         </p>
                     </div>
-                    <X className="text-red-500 mt-1 cursor-pointer p-0.75 hover:bg-gray-300 hover:rounded-full" size={20} onClick={()=>{toast.dismiss(t.id)}}/>
+                    <X className="text-red-500 mt-1 cursor-pointer p-0.75 hover:bg-gray-300 hover:rounded-full" size={20} onClick={()=>{toast.dismiss(t)}}/>
                 </div>
             </div>
         ), {duration: 4000});
